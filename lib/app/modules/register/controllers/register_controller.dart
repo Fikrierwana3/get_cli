@@ -31,7 +31,7 @@ class RegisterController extends GetxController {
         },
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         print('Registration successful: ${response.body}');
         authToken.write('token', response.body['token']);
         Get.snackbar('Success', 'Registration successful');

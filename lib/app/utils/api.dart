@@ -1,11 +1,11 @@
 class BaseUrl {
-  static String login = 'https://praujikom.smkassalaambandung.sch.id/api/login';
+  static String login = 'http://127.0.0.1:8000/api/login';
   static String register =
-      'https://praujikom.smkassalaambandung.sch.id/api/register';
+      'http://127.0.0.1:8000/api/register';
   static String logout =
-      'https://praujikom.smkassalaambandung.sch.id/api/logout';
+      'http://127.0.0.1:8000/api/logout';
 
-  // events
+  // events 
   static String events =
       'https://praujikom.smkassalaambandung.sch.id/api/events';
   static String yourEvent =
