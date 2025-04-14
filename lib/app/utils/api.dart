@@ -18,3 +18,5 @@ class BaseUrl {
   static String profile =
       'https://praujikom.smkassalaambandung.sch.id/api/profile';
 }
+
+ 
