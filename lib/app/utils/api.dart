@@ -16,7 +16,13 @@ class BaseUrl {
       'https://praujikom.smkassalaambandung.sch.id/api/events/';
 
   static String profile =
-      'https://praujikom.smkassalaambandung.sch.id/api/profile';
+      'http://127.0.0.1:8000/api/profile';
+
+  static String berita =
+      'http://127.0.0.1:8000/api/berita';
+
+  static String kategori =
+      'http://127.0.0.1:8000/api/berita';
 }
 
  

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:myapp/app/data/events_response.dart';
+import 'package:myapp/app/modules/dashboard/views/berita_view.dart';
+import 'package:myapp/app/modules/dashboard/views/kategori_view.dart';
 
 import '../../../data/detail_event_response.dart';
 import '../../../utils/api.dart';
@@ -204,8 +206,10 @@ class DashboardController extends GetxController {
   }
 
   final List<Widget> pages = [
-    IndexView(),
-    YourEventView(),
+    //IndexView(),
+    //YourEventView(),
+    KategoriView(),
+    BeritaView(),
     ProfileView(),
   ];
 

@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:myapp/app/data/profil_response.dart';
+import 'package:myapp/app/data/profile_response.dart';
 import '../../../utils/api.dart';
 
 class ProfileController extends GetxController {
   final box = GetStorage();
   final _getConnect = GetConnect();
   final token = GetStorage().read('token');
-  final isLoading = false.obs;
+  late Future<ProfileResponse> profileFuture;
 
   @override
   void onInit() {
-    getProfile();
     super.onInit();
+    profileFuture = getProfile();
   }
 
   Future<ProfileResponse> getProfile() async {

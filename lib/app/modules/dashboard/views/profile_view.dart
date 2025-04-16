@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/app/data/profil_response.dart';
-
-import '../../profile/controllers/profile_controller.dart';
+import 'package:myapp/app/data/profile_response.dart';
+import 'package:myapp/app/modules/profile/controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
   @override
@@ -25,49 +24,57 @@ class ProfileView extends GetView<ProfileController> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: FutureBuilder<ProfileResponse>(
-            future: controller.getProfile(),
+            future: controller.profileFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: Lottie.network(
                     'https://gist.githubusercontent.com/olipiskandar/4f08ac098c81c32ebc02c55f5b11127b/raw/6e21dc500323da795e8b61b5558748b5c7885157/loading.json',
-                    repeat: true,
-                    width: MediaQuery.of(context).size.width / 1,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Text("Loading animation failed");
-                    },
+                    width: MediaQuery.of(context).size.width / 1.5,
                   ),
                 );
               }
 
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text("Failed to load profile"),
+              if (snapshot.hasError || snapshot.data?.data == null) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Failed to load profile"),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        controller.profileFuture = controller.getProfile();
+                        (context as Element).reassemble(); // rebuild the widget tree
+                      },
+                      child: const Text("Retry"),
+                    ),
+                  ],
                 );
               }
 
-              final data = snapshot.data;
-
-              if (data == null || data.email == null || data.email!.isEmpty) {
-                return const Center(child: Text("No profile data available"));
-              }
+              final profile = snapshot.data!.data!;
 
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (data.avatar != null)
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(data.avatar!),
-                      radius: 50,
-                    ),
-                  const SizedBox(height: 8),
+                  const CircleAvatar(
+                    radius: 50,
+                    child: Icon(Icons.person, size: 50),
+                  ),
+                  const SizedBox(height: 16),
                   Text(
-                    "${data.name}",
+                    "${profile.name}",
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  Text(" ${data.email}"),
+                  Text("${profile.email}"),
+                  const SizedBox(height: 8),
+                  Text("ID: ${profile.id}"),
+                  const SizedBox(height: 8),
+                  Text("Admin: ${profile.isAdmin == 1 ? "Yes" : "No"}"),
+                  const SizedBox(height: 8),
+                  Text("Joined: ${profile.createdAt}"),
                 ],
               );
             },
